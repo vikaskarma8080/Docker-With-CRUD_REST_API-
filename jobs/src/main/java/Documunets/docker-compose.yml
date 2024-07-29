@@ -1,0 +1,31 @@
+
+services:
+  mysql_db:
+    image: mysql:5.7 
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: UserInterfacess
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3309"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  springboot:
+    image: akanojiya/wd-springboot-test:latest
+    container_name: wd-container
+    depends_on:
+      - mysql_db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://loclhost:3309/UserInterfacess
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "9900:8083"
+
+
+  
+volumes:
+  db_data:

@@ -1,0 +1,30 @@
+	  	  services:
+	    postgres_db:
+	      image: postgres:latest
+	      container_name: postgres_db
+	      environment:
+	        POSTGRES_PASSWORD: wd123#
+	        POSTGRES_DB: wdspringboot
+	        POSTGRES_USER: postgres
+	      ports:
+	        - "5432:5432"
+	      volumes:
+	        - db_data:/var/lib/postgresql/data
+
+
+  springboot:
+    image: vikaskarma/wd-springboot-test:latest
+    container_name: wd-container
+    depends_on:
+      - mysql_db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://loclhost:3309/UserInterfacess
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "9900:8083"
+
+
+  
+volumes:
+  db_data:
