@@ -1,0 +1,16 @@
+pipeline {
+     agent any
+     
+     tools{
+         maven 'maven_3_9_8'
+     }
+     
+     stages{
+         stage('Build maven project'){
+             steps{
+                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vikaskarma8080/Docker-With-CRUD_REST_API-']]) 
+                 bat 'mvn clean install'
+             }
+         }       
+     }
+}
